@@ -4,8 +4,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { signIn } from "next-auth/react";
+
+// components
 import ErrorMessage from "./ErrorMessage";
+
+// icons
 import {PiEyeBold, PiEyeClosedBold} from "react-icons/pi"
+import {FcGoogle} from "react-icons/fc"
 
 const passwordReg = /^(?=.*[a-zA-Z])[A-Za-z\d!@#$%^&*()_+]/;
 
@@ -39,8 +45,14 @@ const LoginForm = () => {
     const onSubmit = (data: object) => console.log(data);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
+
+    // Google Login
+    const handleGoogleLogin = () => {
+      signIn("google", {callbackUrl: "http://localhost:3000"})
+    }
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full h-auto px-[20%] flex flex-col gap-3">
+    <div className="w-full h-auto flex flex-col justify-center items-center md:px-[20%] gap-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full h-auto flex flex-col gap-3">
         {/* email */}
         <div>
           <input 
@@ -66,9 +78,15 @@ const LoginForm = () => {
         </div>
 
         <button className="primary-button" type="submit">
-          Log In
+          Sign In
         </button>
     </form>
+
+    {/* Google SignIn */}
+    <button className="flex justify-center items-center primary-button gap-2" onClick={handleGoogleLogin}>
+      Sign In with Google <FcGoogle className="text-2xl"/>
+    </button>
+    </div>
   )
 }
 

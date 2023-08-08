@@ -48,7 +48,7 @@ const RegisterForm = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   
   return (
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full h-auto px-[20%] flex flex-col gap-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full h-auto md:px-[20%] flex flex-col gap-3">
         {/* username */}
         <div>
           <input 

@@ -1,11 +1,13 @@
 import Header from "@/components/auth/Header";
 import RegisterForm from "@/components/auth/RegisterForm";
+import Link from "next/link"
 
 const Register = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-5 border-2 border-primary rounded-xl py-5 px-5 w-1/3 h-auto">
+    <div className="flex flex-col md:justify-center items-center gap-y-5 md:border-2 md:border-primary rounded-xl py-5 px-5 w-full md:w-1/3 h-auto">
         <Header title="Register" />
         <RegisterForm />
+        <div>Already had an account? <Link href={"/login"} className="text-primary">Sign In</Link></div>
     </div>
   )
 }
