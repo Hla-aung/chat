@@ -6,6 +6,9 @@ import {useRouter} from "next/navigation"
 export default function Home() {
 
   const {data: session, status} = useSession();
+
+  console.log(session)
+
   const router = useRouter();
 
   if(status === "loading") {

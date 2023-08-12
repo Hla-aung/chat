@@ -2,17 +2,13 @@ import {Schema, model, models} from "mongoose"
 
 const UserSchema = new Schema({
     email: {
-        type: String,
-        unique: [true, "Email has already existed!"],
-        require
+        type: String
     },
     username: {
-        type: String,
-        require
+        type: String
     },
     password: {
-        type: String,
-        require
+        type: String
     }
 },
 {

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { signIn } from "next-auth/react";
+import {useRouter} from "next/navigation"
 
 // components
 import ErrorMessage from "./ErrorMessage";
@@ -12,6 +13,7 @@ import ErrorMessage from "./ErrorMessage";
 // icons
 import {PiEyeBold, PiEyeClosedBold} from "react-icons/pi"
 import {FcGoogle} from "react-icons/fc"
+import Swal from "sweetalert2";
 
 const passwordReg = /^(?=.*[a-zA-Z])[A-Za-z\d!@#$%^&*()_+]/;
 
@@ -34,6 +36,9 @@ type FormData = {
 
 const LoginForm = () => {
 
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [loading, setLoading] = useState(false)
+
     const {
         register,
         handleSubmit,
@@ -42,9 +47,32 @@ const LoginForm = () => {
         resolver: yupResolver(loginSchema),
     })
 
-    const onSubmit = (data: object) => console.log(data);
+    const router = useRouter()
 
-    const [passwordVisible, setPasswordVisible] = useState(false);
+    // Email and Password Login
+    const onSubmit = async (data: {email: string, password: string}) => {
+      setLoading(true)
+      const status = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        callbackUrl: "/",
+        redirect: false,
+      })
+
+      if(status.error === null){
+        router.push(status.url)
+        setLoading(false)
+        return
+      }
+
+      setLoading(false)
+      Swal.fire({
+        title: status.error,
+        text: "Username or password is wrong",
+        icon: "error",
+        confirmButtonText: 'OK'
+      })
+    }
 
     // Google Login
     const handleGoogleLogin = () => {
@@ -77,8 +105,8 @@ const LoginForm = () => {
           <ErrorMessage error={errors.password?.message}/>
         </div>
 
-        <button className="primary-button" type="submit">
-          Sign In
+        <button className="primary-button" type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Sign In"}
         </button>
     </form>
 

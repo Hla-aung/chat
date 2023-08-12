@@ -1,19 +1,16 @@
+// import { MongoClient, ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";
 
 const mongoDbUrl: string = process.env.MONGODB_URL!;
-let isConnected: boolean = false;
 
 const connectToDB = async () => {
-    if (isConnected) {
-        console.log("MongoDB is connected");
-    }
-
     try{
-        await mongoose.connect(mongoDbUrl);
-        isConnected = true;
+        await mongoose.connect(mongoDbUrl)
+        .then(() => console.log("Mongodb is connected"))
+        .catch((e) => console.log(e))
     }
-    catch (err){
-        console.log(err)
+    catch (e){
+        throw new Error("Error on connecting to the server!")
     }
 }
 
