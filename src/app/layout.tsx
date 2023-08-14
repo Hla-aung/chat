@@ -2,15 +2,19 @@
 
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
-import { Roboto_Slab } from 'next/font/google'
+import { Roboto_Flex, Roboto_Slab } from 'next/font/google'
 import {SessionProvider} from "next-auth/react"
 import { Session } from 'next-auth'
 
-const inter = Roboto_Slab({ subsets: ['latin'] })
+const roboto = Roboto_Flex({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Chat App',
+  title: 'Whisper',
   description: 'A simple chat app',
+  applicationName: 'Whisper',
+  authors: {url: "", name: "Htet Lin Aung"},
+  themeColor: "#005f73",
+  icons: [{rel: "icon", url: "/logo.svg" }, {rel: "apple-touch-icon", url: "/logo.svg"}]
 }
 
 export default function RootLayout({
@@ -21,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={roboto.className} suppressHydrationWarning={true}>
         <SessionProvider session={session}>
           {children}
         </SessionProvider>
