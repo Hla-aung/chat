@@ -9,6 +9,7 @@ import {useRouter} from "next/navigation"
 
 // components
 import ErrorMessage from "./ErrorMessage";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 // icons
 import {PiEyeBold, PiEyeClosedBold} from "react-icons/pi"
@@ -37,7 +38,8 @@ type FormData = {
 const LoginForm = () => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false)
 
     const {
         register,
@@ -76,7 +78,9 @@ const LoginForm = () => {
 
     // Google Login
     const handleGoogleLogin = () => {
+      setGoogleLoading(true)
       signIn("google", {callbackUrl: "http://localhost:3000"})
+      setGoogleLoading(false)
     }
   return (
     <div className="w-full h-auto flex flex-col justify-center items-center md:px-[20%] gap-3">
@@ -106,13 +110,19 @@ const LoginForm = () => {
         </div>
 
         <button className="primary-button" type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Sign In"}
+          {loading ? <LoadingSpinner /> : "Sign In"}
         </button>
     </form>
 
     {/* Google SignIn */}
-    <button className="flex justify-center items-center primary-button gap-2" onClick={handleGoogleLogin}>
-      Sign In with Google <FcGoogle className="text-2xl"/>
+    <button className="primary-button" onClick={handleGoogleLogin} disabled={googleLoading}>
+      {
+        googleLoading ? <LoadingSpinner /> 
+        : <div className="flex justify-center items-center gap-2">
+          Sign In with Google <FcGoogle className="text-2xl"/>
+        </div>
+      }
+      
     </button>
     </div>
   )

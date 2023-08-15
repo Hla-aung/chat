@@ -1,18 +1,22 @@
 'use client'
 
-import { useSession, signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import {useRouter} from "next/navigation"
+import Loading from "@/components/ui/Loading";
+
+// components
+import Navbar from "@/components/common/Navbar";
 
 export default function Home() {
 
   const {data: session, status} = useSession();
 
-  console.log(session)
+  console.log(session?.user)
 
   const router = useRouter();
 
   if(status === "loading") {
-    return null
+    return <Loading />
   } 
 
   if(status === "unauthenticated") {
@@ -23,10 +27,9 @@ export default function Home() {
     <>
     {
       status === "authenticated" && (
-        <>
-          <div>{JSON.stringify(session)}</div>
-          <button onClick={() => signOut({callbackUrl: "/login"})}>Sign Out</button>
-        </>
+        <div className="w-full min-h-screen">
+          <Navbar {...session?.user}/>
+        </div>
       )
     }
       
