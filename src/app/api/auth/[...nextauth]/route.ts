@@ -60,6 +60,27 @@ const handler = NextAuth({
                     username: token.username
                 }
             }
+        },
+        async signIn({profile}){
+            try{
+                await connectToDB();
+
+                const user = await User.findOne({email: profile.email})
+
+                if(!user){
+                    await User.create({
+                        email: profile.email,
+                        username: profile.name,
+                        image: profile.picture || profile.image,
+                        pasword: ""
+                    })
+                }
+
+                return true;
+            }
+            catch(e){
+                return false;
+            }
         }
     },
     session: {

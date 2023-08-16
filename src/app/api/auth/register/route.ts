@@ -22,6 +22,7 @@ export const POST = async (req: NextRequest, res: NextResponse)=> {
         await User.create({
             email: email,
             username: username,
+            image: "",
             password: hashPassword
         })
 
