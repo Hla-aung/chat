@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ErrorMessage from "./ErrorMessage";
+import LoadingSpinner from "../ui/LoadingSpinner";
 import {PiEyeBold, PiEyeClosedBold} from "react-icons/pi"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2'
@@ -46,7 +47,7 @@ const RegisterForm = () => {
 
   const router = useRouter()
   
-    const onSubmit = async (data: object) => {
+    const onSubmit = async (data: FormData) => {
       setLoading(true)
       const options = {
         method: "POST",
@@ -132,7 +133,7 @@ const RegisterForm = () => {
           <ErrorMessage error={errors.confirmPassword?.message}/>
         </div>
         <button className="primary-button" type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Register"}
+          {loading ? <LoadingSpinner /> : "Register"}
         </button>
       </form>
   );

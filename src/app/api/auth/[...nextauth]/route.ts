@@ -61,26 +61,31 @@ const handler = NextAuth({
                 }
             }
         },
-        async signIn({profile}){
-            try{
-                await connectToDB();
-
-                const user = await User.findOne({email: profile.email})
-
-                if(!user){
-                    await User.create({
-                        email: profile.email,
-                        username: profile.name,
-                        image: profile.picture || profile.image,
-                        pasword: ""
-                    })
+        async signIn({profile, account}){
+            if(account.provider === "google"){
+                try{
+                    await connectToDB();
+    
+                    const user = await User.findOne({email: profile.email })
+    
+                    if(!user){
+                        await User.create({
+                            email: profile.email,
+                            username: profile.name,
+                            image: profile.picture || profile.image,
+                            password: ""
+                        })
+                    }
+    
+                    return true;
                 }
-
-                return true;
+                catch(e){
+                    return false;
+                }
+            } else {
+                return true
             }
-            catch(e){
-                return false;
-            }
+            
         }
     },
     session: {

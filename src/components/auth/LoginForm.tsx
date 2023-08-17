@@ -61,19 +61,22 @@ const LoginForm = () => {
         redirect: false,
       })
 
-      if(status.error === null){
-        router.push(status.url)
+      console.log(status)
+
+      if(status.error){
         setLoading(false)
-        return
+        Swal.fire({
+          title: status.error,
+          text: "Username or password is wrong",
+          icon: "error",
+          confirmButtonText: 'OK'
+        })
       }
 
+      
+
       setLoading(false)
-      Swal.fire({
-        title: status.error,
-        text: "Username or password is wrong",
-        icon: "error",
-        confirmButtonText: 'OK'
-      })
+      router.push(status.url)
     }
 
     // Google Login

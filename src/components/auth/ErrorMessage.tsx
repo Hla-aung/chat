@@ -8,7 +8,7 @@ type Props = {
 const ErrorMessage = (props: Props) => {
   return (
     <IconContext.Provider value={{color: "#e51418"}}>
-        {props.error && <div className="text-[10px] font-light text-warning flex items-center gap-1">
+        {props.error && <div className="text-[10px] md:text-xs font-light text-warning flex items-center gap-1">
             <PiWarningCircleBold />
             <p>{props.error}</p>
         </div>}

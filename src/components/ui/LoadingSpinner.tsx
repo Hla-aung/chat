@@ -3,7 +3,7 @@ import { IconContext } from "react-icons"
 
 const LoadingSpinner = () => {
   return (
-    <IconContext.Provider value={{className: "animate-spin", color: "#fff"}}>
+    <IconContext.Provider value={{className: "animate-spin w-full flex justify-center items-center", color: "#fff"}}>
         <FiLoader />
     </IconContext.Provider>
   )
