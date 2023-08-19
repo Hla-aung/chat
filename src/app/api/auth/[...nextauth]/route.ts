@@ -9,7 +9,7 @@ import { NextResponse } from 'next/server';
 const googleId: string = process.env.GOOGLE_ID!;
 const googleSecret: string = process.env.GOOGLE_SECRET!;
 
-const handler = NextAuth({
+export const handler = NextAuth({
     providers: [
         GoogleProvider({
             clientId: googleId,
@@ -41,7 +41,6 @@ const handler = NextAuth({
     ],
     callbacks: {
         async jwt({token, user}){
-            
             if(user){
                 return {
                     ...token,

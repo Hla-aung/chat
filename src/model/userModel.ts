@@ -14,6 +14,12 @@ const UserSchema = new Schema({
     },
     password: {
         type: String
+    },
+    friendRequests: {
+        type: Array<string>
+    },
+    friends: {
+        type: Array<string>
     }
 },
 {

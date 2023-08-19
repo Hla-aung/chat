@@ -5,7 +5,6 @@ import {useForm} from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import ErrorMessage from "../auth/ErrorMessage"
-import axios, {AxiosError} from "axios"
 
 const searchSchema = yup.object({
     email: yup.string().required("Enter your friend's email to search").email("Email must be a valid email")
@@ -16,7 +15,7 @@ type FormData = {
 }
 
 const FriendSearch = () => {
-    const [showSuccess, setShowSuccess] = useState<boolean>(false)
+    const [showStatus, setShowStatus] = useState<string>("")
 
     const {
         register,
@@ -36,8 +35,9 @@ const FriendSearch = () => {
             body: JSON.stringify(data)
         }
 
-        await fetch("http://localhost:3000/api/friend", options)
-        .then(res => console.log(res))
+        await fetch("http://localhost:3000/api/friends", options)
+        .then(res =>  res.json())
+        .then(data => setShowStatus(data.message))
     }
 
   return (
@@ -47,17 +47,17 @@ const FriendSearch = () => {
                 <input 
                     type="text"
                     {...register("email")} 
-                    placeholder="Search Friends by Email"
+                    placeholder="Add Friends by Email"
                     className="primary-input h-[52px]"
                 />
-                {errors && <ErrorMessage error={errors.email?.message}/>}
-                {showSuccess && <p className="text-[10px] text-xs text-green-500 font-light">Friend request has been sent!</p>}
+                {/* {errors && <ErrorMessage error={errors.email?.message}/>} */}
+                {showStatus && <p className={`pt-1 pl-5 text-sm ${showStatus === "Friend request sent" ? "text-green-500" : "text-red-500"} font-medium`}>{showStatus}</p>}
             </div>
             <button 
                 className="rounded-xl bg-primary text-white text-center w-4/12 h-[52px]"
                 type="submit"
             >
-                Search 
+                Add Friend 
             </button>
         </form>
     </>
