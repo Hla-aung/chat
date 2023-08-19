@@ -26,7 +26,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/logo.svg" />
+        <link rel="preload" href="style.css" as="style" />
+        <link rel="icon" href="/logo.svg"/>
         <title>Whisper</title>
       </head>
       <body className={roboto.className} suppressHydrationWarning={true}>

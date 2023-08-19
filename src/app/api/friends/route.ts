@@ -30,20 +30,29 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
         const session = await getServerSession()
 
+        const user = await User.findOne({email: session.user.email})
+
+        const inRequestList = user.friendRequests.includes(email)
+
+        if(inRequestList){
+            return NextResponse.json({message: "Already in friend request"}, {status: 400})
+        }
+
         const alreadyAdded = friend.friendRequests.includes(session.user.email)
 
         if(alreadyAdded){
-            return NextResponse.json({message: "Already request sent!"}, {status: 401})
+            return NextResponse.json({message: "Already request sent!"}, {status: 400})
         }
 
         const alreadyFriend = friend.friends.includes(session.user.email)
+        const userAlreadyAdded = user.friends.includes(email)
 
-        if(alreadyFriend){
-            return NextResponse.json({message: "You are already friends!"}, {status: 401})
+        if(alreadyFriend || userAlreadyAdded){
+            return NextResponse.json({message: "You are already friends!"}, {status: 400})
         }
 
         if(session.user.email === friend.email) {
-            return NextResponse.json({message: "You can't add yourself as a friend!"}, {status: 401})
+            return NextResponse.json({message: "You can't add yourself as a friend!"}, {status: 400})
         }
 
         await User.updateOne({_id: friend._id}, {$push: {friendRequests: session.user.email}})

@@ -20,8 +20,6 @@ const FriendSearch = () => {
     const {
         register,
         handleSubmit,
-        formState: {errors},
-        setError
     } = useForm<FormData>({
         resolver: yupResolver(searchSchema)
     })

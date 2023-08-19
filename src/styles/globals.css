@@ -26,6 +26,10 @@ input[type="checkbox"]::before {
   @apply w-full h-auto rounded-xl bg-primary text-white text-center px-5 py-3 disabled:bg-primary/50 disabled:cursor-not-allowed hover:ring-2 hover:ring-[rgb(144,224,239)] hover:ring-offset-1
 }
 
+.secondary-button{
+  @apply w-full h-auto rounded-xl text-center px-5 py-3 border-2 border-primary
+}
+
 
 /* Sweet Alert */
 .swal2-confirm{
