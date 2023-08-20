@@ -20,6 +20,10 @@ input[type="checkbox"]::before {
   background-color: transparent;
 }
 
+::-ms-reveal {
+  display: none;
+}
+
 
 /* Button */
 .primary-button{

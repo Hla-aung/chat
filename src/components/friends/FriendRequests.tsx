@@ -54,7 +54,7 @@ const FriendRequests = ({
     }
 
   return (
-    <div className="w-full max-h-[30vh] h-[30vh]">
+    <div className="w-full max-h-[30vh] mb-3">
       <div className="flex items-center gap-3">
         <p className="text-2xl font-semibold">Friend Requests</p>
         <p className="w-6 h-6 rounded-full bg-primary text-center text-white">

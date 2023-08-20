@@ -61,8 +61,6 @@ const LoginForm = () => {
         redirect: false,
       })
 
-      console.log(status)
-
       if(status.error){
         setLoading(false)
         Swal.fire({
@@ -82,7 +80,7 @@ const LoginForm = () => {
     // Google Login
     const handleGoogleLogin = () => {
       setGoogleLoading(true)
-      signIn("google", {callbackUrl: "http://localhost:3000"})
+      signIn("google", {callbackUrl: "/"})
       setGoogleLoading(false)
     }
   return (
