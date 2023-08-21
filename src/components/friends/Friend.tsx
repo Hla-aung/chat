@@ -66,6 +66,8 @@ const Friend = () => {
         })
       }, [])
 
+      console.log(friends)
+
   return (
     <div className="w-2/5">
         <FriendSearch />

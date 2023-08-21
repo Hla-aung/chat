@@ -1,7 +1,6 @@
 import Image from "next/image";
 import LoadingSpinner from "../ui/LoadingSpinner";
 
-
 type Friends = {
     email: string;
     username: string;
@@ -25,7 +24,7 @@ const FriendAccepted = ({isLoading, friends}: {isLoading: boolean, friends: Frie
           {friends.length > 0 ? (
             <div className="flex flex-col mt-2 px-3 pt-2  overflow-y-scroll w-full h-full">
               {friends.map((sender, i) => (
-                <div key={i} className="flex items-center gap-5 border-b-2 py-3" >
+                <div key={i} className="flex items-center gap-5 border-b-2 py-3">
                   {sender[0]?.image ? (
                     <Image
                       src={sender[0]?.image}

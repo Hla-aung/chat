@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
         const email = await req.json();
 
-        const requestSender = await User.find({email: email}).select({email: 1, username: 1, image: 1})
+        const requestSender = await User.find({email: email}).select({id: 1, email: 1, username: 1, image: 1})
 
         return NextResponse.json({requestSender: requestSender}, {status: 200})
     }

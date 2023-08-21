@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from 'next-auth/providers/credentials';
 import connectToDB from '@/database/database';
@@ -9,7 +9,7 @@ import { NextResponse } from 'next/server';
 const googleId: string = process.env.GOOGLE_ID!;
 const googleSecret: string = process.env.GOOGLE_SECRET!;
 
-export const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
             clientId: googleId,
@@ -91,7 +91,7 @@ export const handler = NextAuth({
         strategy: "jwt",
     },
     secret: process.env.NEXTAUTH_SECRET
-})
+}
     
-
+const handler = NextAuth(authOptions)
 export {handler as GET, handler as POST}

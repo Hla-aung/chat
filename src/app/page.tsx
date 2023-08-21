@@ -1,18 +1,20 @@
 'use client'
 
 import { useSession } from "next-auth/react"
-import {useRouter} from "next/navigation"
+import {useRouter, useParams} from "next/navigation"
 import Loading from "@/components/ui/Loading";
 
 // components
 import Navbar from "@/components/common/Navbar";
 import Friend from "@/components/friends/Friend";
+import Chat from "@/components/chat/Chat";
 
 export default function Home() {
 
   const {data: session, status} = useSession();
 
   const router = useRouter();
+  const params = useParams()
 
   if(status === "loading") {
     return <Loading />
@@ -30,6 +32,7 @@ export default function Home() {
           <Navbar {...session?.user}/>
           <div className="w-full flex md:px-32">
             <Friend />
+            <Chat />
           </div>
         </div>
       )

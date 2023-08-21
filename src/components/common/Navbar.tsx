@@ -26,9 +26,9 @@ const Navbar = (userSession:{name ?: string, username ?: string, email ?: string
             </button>
             
             {userSession.image
-            ? <Image src={userSession?.image} alt="" width={100} height={100} className="rounded-full w-12 h-12 md:w-20 md:h-20 cursor-pointer" onClick={() => setShowUser(!showUser)}/>
+            ? <Image src={userSession?.image} alt="" width={100} height={100} className="rounded-full w-12 h-12 md:w-16 md:h-16 cursor-pointer" onClick={() => setShowUser(!showUser)}/>
             :
-            <div className="cursor-pointer rounded-full w-12 h-12 md:w-20 md:h-20 flex-shrink-0 border-2 border-primary flex justify-center items-center" onClick={() => setShowUser(!showUser)}>
+            <div className="cursor-pointer rounded-full w-12 h-12 md:w-16 md:h-16 flex-shrink-0 border-2 border-primary flex justify-center items-center" onClick={() => setShowUser(!showUser)}>
                 <p className="text-xl md:text-2xl font-semibold text-primary select-none uppercase">{userSession.username.slice(0,2) || userSession.name.slice(0, 2)}</p>
             </div>
             }
