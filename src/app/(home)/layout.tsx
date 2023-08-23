@@ -33,9 +33,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {status === "authenticated" && (
-          <div className="w-full min-h-screen">
+          <div className="w-full max-h-screen">
             <Navbar {...session?.user} />
-            <div className="w-full flex md:px-32">
+            <div className="w-full flex md:px-7">
               <Friend />
               {children}
             </div>

@@ -12,7 +12,7 @@ const bubbleGum = Bubblegum_Sans({ weight: "400", adjustFontFallback: true, fall
 const Navbar = (userSession:{name ?: string, username ?: string, email ?: string, image ?: string}) => {
     const [showUser, setShowUser] = useState(false)
   return (
-    <div className={`w-full h-auto flex justify-between items-center px-3 md:px-32 py-2 shadow-md`}>
+    <div className={`w-full h-auto flex justify-between items-center px-3 md:px-7 py-2 shadow-md`}>
         {/* Logo */}
         <div className="flex items-center">
             <Logo className="w-12 h-12 md:w-20 md:h-20"/>

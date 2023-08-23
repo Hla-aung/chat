@@ -54,7 +54,7 @@ const FriendRequests = ({
     }
 
   return (
-    <div className="w-full max-h-[30vh] mb-3">
+    <div className="w-full max-h-[30vh] h-[30vh] mb-3">
       <div className="flex items-center gap-3">
         <p className="text-2xl font-semibold">Friend Requests</p>
         <p className="w-6 h-6 rounded-full bg-primary text-center text-white">
@@ -66,7 +66,7 @@ const FriendRequests = ({
       ) : (
         <>
           {requestSender.length > 0 ? (
-            <div className="flex flex-col mt-2 px-3 pt-2  overflow-y-scroll w-full h-full">
+            <div className="flex flex-col mt-2 px-3 pt-2  overflow-y-auto w-full h-full">
               {requestSender.map((sender, i) => (
                 <div key={i} className="flex items-center gap-5 border-b-2 py-3" >
                   {sender[0]?.image ? (
@@ -76,6 +76,7 @@ const FriendRequests = ({
                       width={100}
                       height={100}
                       className="w-20 h-20 rounded-full"
+                      priority
                     />
                   ) : (
                     <div className="text-primary text-2xl border border-primary w-20 h-20  font-semibold rounded-full uppercase flex justify-center items-center flex-shrink-0">

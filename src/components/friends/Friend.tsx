@@ -52,41 +52,14 @@ const Friend = () => {
           })
         ).then(value => setFriends(value))
         .catch(e => console.log(e))
-
-        setLoading(false)
+        .finally(() => {
+          setLoading(false)
+        })
       })
     }, [])
 
-    // useEffect(() => {
-    //   fetch('http://localhost:3000/api/friends')
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       return data.user
-    //     })
-    //     .then(user => {
-    //       Promise.all(
-    //         user.friends.map(async (email: string) => {
-    //           const options = {
-    //             method: "POST",
-    //             headers: {
-    //               "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(email)
-    //           }
-      
-    //           const data = await fetch("http://localhost:3000/api/friends/friend-requests", options)
-    //           .then(res => res.json())
-    //           return data.requestSender
-    //         })
-    //       ).then(value => setFriends(value))
-    //       .catch(e => console.log(e))
-  
-    //       setLoading(false)
-    //     })
-    //   }, [])
-
   return (
-    <div className="w-2/5">
+    <div className="w-4/12 pr-3">
         <FriendSearch />
         <FriendRequests isLoading={isLoading} requestSender={requestSender} setRequestSender={setRequestSender}/>
         <FriendAccepted isLoading={isLoading} friends={friends} user={user}/>
