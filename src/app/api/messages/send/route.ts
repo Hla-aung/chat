@@ -2,6 +2,7 @@ import connectToDB from "@/database/database";
 import Chat from "@/model/chatModel";
 import {v4 as uuidv4} from "uuid"
 import { NextRequest, NextResponse } from "next/server";
+import { pusherServer } from "@/utils/pusher";
 
 
 export const POST =async (req: NextRequest, res: NextResponse) => {
@@ -12,15 +13,17 @@ export const POST =async (req: NextRequest, res: NextResponse) => {
 
         const conversation = await Chat.findOne({chat_id: chatId})
 
+        const message = {
+            _id: uuidv4(),
+            message: text,
+            senderId: senderId,
+            timestamp: Date.now()
+        }
+
         if(!conversation){
             await Chat.create({
                 chat_id: chatId,
-                messages: [{
-                    _id: uuidv4(),
-                    message: text,
-                    senderId: senderId,
-                    timestamp: Date.now()
-                }]
+                messages: [message]
             })
 
             return NextResponse.json({message: "New conversation created"}, {status: 201})
@@ -28,14 +31,11 @@ export const POST =async (req: NextRequest, res: NextResponse) => {
 
         await Chat.updateOne({chat_id: chatId}, {
             $push: {
-                messages: {
-                    _id: uuidv4(),
-                    message: text,
-                    senderId: senderId,
-                    timestamp: Date.now()
-                }
+                messages: message
             }
         })
+
+        await pusherServer.trigger(chatId, "incomingMessages", message)
 
         return NextResponse.json({message: "Message has been sent"}, {status: 200})
     }

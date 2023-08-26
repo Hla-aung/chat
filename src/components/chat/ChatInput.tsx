@@ -32,18 +32,21 @@ const ChatInput = ({
   };
 
   return (
-    <div className="w-full max-h-[100px]">
+    <>
+    {chatPartner && <div className="w-full max-h-[100px]">
       <div className="flex justify-between items-center px-5">
         <TextArea
-          className="w-[95%] border-2 border-black text-xl px-5 pt-2.5 rounded-full caret-primary appearance-none focus:ring-primary focus:ring-offset-0"
+          className="w-[95%] border-2 border-black px-5  caret-primary appearance-none focus:ring-primary focus:ring-offset-0 rounded-lg"
           value={input}
           onPressEnter={sendMessage}
           onChange={(e) => setInput(e.target.value)}
           placeholder={`Message ${friend?.username}`}
+          rows={1.5}
         />
         <SendIcon className="w-12 cursor-pointer" eventhandler={sendMessage} />
       </div>
-    </div>
+    </div>}
+    </>
   );
 };
 

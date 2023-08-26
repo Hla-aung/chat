@@ -2,9 +2,7 @@ import Chat from "./[chatid]/page"
 
 const page = () => {
   return (
-    <>
-        <Chat />
-    </>
+    <Chat />
   )
 }
 
