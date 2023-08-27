@@ -4,6 +4,7 @@ import { useState } from "react";
 import TextArea from "rc-textarea";
 import SendIcon from "@/icons/SendIcon";
 import { Friends } from "../friends/FriendAccepted";
+import EmojiPicker from "emoji-picker-react";
 
 type ChatPartner = Array<Friends>;
 
@@ -36,7 +37,7 @@ const ChatInput = ({
     {chatPartner && <div className="w-full max-h-[100px]">
       <div className="flex justify-between items-center px-5">
         <TextArea
-          className="w-[95%] border-2 border-black px-5  caret-primary appearance-none focus:ring-primary focus:ring-offset-0 rounded-lg"
+          className="primary-input"
           value={input}
           onPressEnter={sendMessage}
           onChange={(e) => setInput(e.target.value)}

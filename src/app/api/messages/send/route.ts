@@ -11,6 +11,10 @@ export const POST =async (req: NextRequest, res: NextResponse) => {
 
         const {chatId, senderId, text} = await req.json()
 
+        const [userId1, userId2] = (chatId as string)?.split("--") ?? []
+
+        const friendId = senderId === userId1 ? userId2 : userId1
+
         const conversation = await Chat.findOne({chat_id: chatId})
 
         const message = {
@@ -36,6 +40,8 @@ export const POST =async (req: NextRequest, res: NextResponse) => {
         })
 
         await pusherServer.trigger(chatId, "incomingMessages", message)
+
+        await pusherServer.trigger(friendId, "newMessage", message)
 
         return NextResponse.json({message: "Message has been sent"}, {status: 200})
     }

@@ -1,21 +1,11 @@
 "use client"
 
 import '@/styles/globals.css'
-import type { Metadata } from 'next'
 import { Roboto_Flex } from 'next/font/google'
 import {SessionProvider} from "next-auth/react"
 import { Session } from 'next-auth'
 
 const roboto = Roboto_Flex({ subsets: ['latin'] })
-
-
-export const metadata: Metadata = {
-  title: 'Whisper',
-  description: 'A simple chat app',
-  applicationName: 'Whisper',
-  authors: {url: "", name: "Htet Lin Aung"},
-  themeColor: "#005f73",
-}
 
 export default function RootLayout({
   children, session

@@ -34,6 +34,18 @@ input[type="checkbox"]::before {
   @apply w-full h-auto rounded-xl text-center px-5 py-3 border-2 border-primary
 }
 
+/* Scrollbar */
+.primary-scrollbar::-webkit-scrollbar{
+  @apply w-2
+}
+
+.primary-scrollbar::-webkit-scrollbar-track {
+  @apply bg-none
+}
+
+.primary-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-lg
+}
 
 /* Sweet Alert */
 .swal2-confirm{

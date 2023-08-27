@@ -25,7 +25,7 @@ const ChatBody = ({initialChat, user, chatId}:{initialChat: InitialChat[], user:
   },[initialChat])
   
   useEffect(() => {
-    pusherClient.subscribe(chatId as string)
+    chatId && pusherClient.subscribe(chatId as string)
 
     const incomingMessages = (message: InitialChat) => {
       setMessages(prevState => [...prevState, message])
@@ -48,7 +48,7 @@ const ChatBody = ({initialChat, user, chatId}:{initialChat: InitialChat[], user:
     )
   }
   return (
-    <div className="w-full h-[calc(100vh-300px)] flex flex-col-reverse overflow-y-auto px-3 gap-0.5">
+    <div className="w-full h-[calc(100vh-300px)] flex flex-col-reverse overflow-y-auto px-3 gap-0.5 primary-scrollbar">
       {
         messages?.sort((a, b) => b.timestamp - a.timestamp).map((message: InitialChat, i: number) => {
           const isCurrentUser = message.senderId === user?._id
