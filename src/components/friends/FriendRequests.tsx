@@ -35,7 +35,7 @@ const FriendRequests = ({
         await fetch("http://localhost:3000/api/friends/accept", options)
 
         setRequestSender(prev => prev.filter((request) => request[0].email !== email))
-        router.refresh()
+        window.location.reload()
     }
 
     const denyFriend = async(email: string) => {
@@ -50,7 +50,7 @@ const FriendRequests = ({
         await fetch("http://localhost:3000/api/friends/deny", options)
 
         setRequestSender(prev => prev.filter((request) => request[0].email !== email))
-        router.refresh()
+        window.location.reload()
     }
 
   return (

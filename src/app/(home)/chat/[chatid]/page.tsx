@@ -55,7 +55,7 @@ const Chat = () => {
 
   return (
     <div className="w-8/12 border h-[calc(100vh-100px)]">
-        <ChatHeader chatPartner={chatPartner}/>
+        <ChatHeader chatPartner={chatPartner} chatId={chatid}/>
         <ChatBody initialChat={initialChat} user={user} chatId={chatid}/>
         <ChatInput user={user} chatPartner={chatPartner} chatId={chatid}/>
     </div>

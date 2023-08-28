@@ -20,3 +20,18 @@ export const POST = async(req: NextRequest, res: NextResponse) => {
         return NextResponse.json({message: "Something went wrong"}, {status: 500})
     }
 }
+
+export const DELETE = async (req: NextRequest, res: NextResponse) => {
+    try{
+        await connectToDB();
+
+        const chatId = await req.json()
+
+        await Chat.deleteOne({chat_id: chatId})
+
+        return NextResponse.json({message: "The entire conversation is deleted successfully!"})
+    }
+    catch (e){
+        return NextResponse.json({message: "Something went wrong"}, {status: 500})
+    }
+}

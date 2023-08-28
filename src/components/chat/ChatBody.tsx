@@ -39,14 +39,6 @@ const ChatBody = ({initialChat, user, chatId}:{initialChat: InitialChat[], user:
     }
   }, [chatId])
   
-
-  if(!initialChat){
-    return (
-      <div className="w-full h-[calc(100vh-300px)] flex justify-center items-center">
-        <p className="text-2xl font-bold">Start a new conversation or Enter a conversation</p>
-      </div>
-    )
-  }
   return (
     <div className="w-full h-[calc(100vh-300px)] flex flex-col-reverse overflow-y-auto px-3 gap-0.5 primary-scrollbar">
       {

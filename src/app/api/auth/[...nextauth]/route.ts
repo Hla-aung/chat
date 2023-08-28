@@ -1,15 +1,14 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from 'next-auth/providers/credentials';
 import connectToDB from '@/database/database';
 import User from '@/model/userModel';
 import { compare } from 'bcryptjs';
-import { NextResponse } from 'next/server';
 
 const googleId: string = process.env.GOOGLE_ID!;
 const googleSecret: string = process.env.GOOGLE_SECRET!;
 
-export const authOptions: NextAuthOptions = {
+const handler = NextAuth({
     providers: [
         GoogleProvider({
             clientId: googleId,
@@ -91,7 +90,6 @@ export const authOptions: NextAuthOptions = {
         strategy: "jwt",
     },
     secret: process.env.NEXTAUTH_SECRET
-}
-    
-const handler = NextAuth(authOptions)
+})
+
 export {handler as GET, handler as POST}

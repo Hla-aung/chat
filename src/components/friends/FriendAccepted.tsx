@@ -54,6 +54,15 @@ const FriendAccepted = ({
     };
   }, [pathname, user?._id]);
 
+  useEffect(() => {
+    if(pathname.includes('chat')){
+      setUnseenMessages((prev) => {
+        return prev.filter(message => !pathname.includes(message.senderId))
+      })
+    }
+  }, [pathname])
+
+
   return (
     <div className="w-full max-h-[30vh] h-[30vh]">
       <div className="flex items-center gap-3">
@@ -70,12 +79,12 @@ const FriendAccepted = ({
             <div className="flex flex-col mt-2 px-3 pt-2  overflow-y-auto w-full h-full primary-scrollbar">
               {friends.map((friend, i) => {
                 const unseenMessageCount = unseenMessages?.filter(
-                  (unseen) => unseen._id === friend[0]?._id
+                  (unseen) => unseen.senderId === friend[0]?._id
                 ).length;
 
                 return (
                   <Link
-                    href={`/${sortUserIds(user?._id, friend[0]?._id)}`}
+                    href={`/chat/${sortUserIds(user?._id, friend[0]?._id)}`}
                     key={i}
                   >
                     <div
@@ -100,7 +109,7 @@ const FriendAccepted = ({
                         <p className="text-xl font-semibold">
                           {friend[0]?.username}
                         </p>
-                        <p>{unseenMessageCount}</p>
+                        {unseenMessageCount > 0 && <p>{unseenMessageCount}</p>}
                       </div>
                     </div>
                   </Link>

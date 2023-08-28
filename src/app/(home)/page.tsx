@@ -1,4 +1,4 @@
-import Chat from "./[chatid]/page"
+import Chat from "./chat/[chatid]/page"
 
 const page = () => {
   return (

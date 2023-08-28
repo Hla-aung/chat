@@ -51,5 +51,5 @@ input[type="checkbox"]::before {
 .swal2-confirm{
   background-color: #005f73 !important;
   font-family: "Roboto", sans-serif !important;
-  @apply appearance-none focus:ring-white focus:ring-0 focus:ring-offset-0
+  @apply appearance-none focus:ring-white focus:ring-0 focus:ring-offset-0 focus:outline-none
 }
