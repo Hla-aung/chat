@@ -2,37 +2,27 @@ import Image from "next/image";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Link from "next/link";
 import { sortUserIds } from "@/utils/utilities";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { pusherClient } from "@/utils/pusher";
-import { InitialChat } from "../chat/ChatBody";
+import { Friends, InitialChat } from "@/types/types";
 import { usePathname } from "next/navigation";
 
-export type Friends = {
-  _id: string;
-  email: string;
-  username: string;
-  image: string;
-};
 type FriendType = Array<Array<Friends>>;
-
-type User = {
-  _id: string;
-};
 
 const FriendAccepted = ({
   isLoading,
   friends,
   user,
+  setShowUser
 }: {
   isLoading: boolean;
   friends: FriendType;
-  user: User;
+  user: Friends;
+  setShowUser: Dispatch<SetStateAction<boolean>>
 }) => {
   const pathname = usePathname();
 
   const [unseenMessages, setUnseenMessages] = useState<InitialChat[]>([]);
-
-  console.log(unseenMessages)
 
   useEffect(() => {
     user?._id && pusherClient.subscribe(user?._id);
@@ -86,6 +76,7 @@ const FriendAccepted = ({
                   <Link
                     href={`/chat/${sortUserIds(user?._id, friend[0]?._id)}`}
                     key={i}
+                    onClick={() => setShowUser(false)}
                   >
                     <div
                       key={i}

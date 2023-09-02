@@ -2,6 +2,7 @@ import connectToDB from "@/database/database"
 import User from "@/model/userModel"
 import {NextRequest, NextResponse} from "next/server"
 import { getServerSession } from "next-auth"
+import { pusherServer } from "@/utils/pusher"
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
     try{
@@ -26,11 +27,11 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
         const friend = await User.findOne({email: email})
 
-        if(!friend) return NextResponse.json({message: "Friend is not existed!"}, {status: 401})
-
         const session = await getServerSession()
 
         const user = await User.findOne({email: session.user.email})
+
+        if(!friend) return NextResponse.json({message: "Friend is not existed!"}, {status: 401})
 
         const inRequestList = user.friendRequests.includes(email)
 

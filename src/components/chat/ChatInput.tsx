@@ -3,7 +3,7 @@
 import { useState } from "react";
 import TextArea from "rc-textarea";
 import SendIcon from "@/icons/SendIcon";
-import { Friends } from "../friends/FriendAccepted";
+import { Friends } from "@/types/types";
 import EmojiPicker from "emoji-picker-react";
 
 type ChatPartner = Array<Friends>;
@@ -28,7 +28,7 @@ const ChatInput = ({
         },
         body: JSON.stringify({chatId, senderId, text: input})
     }
-    await fetch("http://localhost:3000/api/messages/send", options)
+    await fetch("/api/messages/send", options)
     setInput("")
   };
 

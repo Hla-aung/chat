@@ -15,6 +15,7 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import {PiEyeBold, PiEyeClosedBold} from "react-icons/pi"
 import {FcGoogle} from "react-icons/fc"
 import Swal from "sweetalert2";
+import { LoginFormData } from "@/types/types";
 
 const passwordReg = /^(?=.*[a-zA-Z])[A-Za-z\d!@#$%^&*()_+]/;
 
@@ -30,11 +31,6 @@ const loginSchema = yup.object({
     .min(6, "Password must be at least 6 characters"),
 })
 
-type FormData = {
-    email: string;
-    password: string;
-}
-
 const LoginForm = () => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -45,14 +41,14 @@ const LoginForm = () => {
         register,
         handleSubmit,
         formState: {errors}
-    } = useForm<FormData>({
+    } = useForm<LoginFormData>({
         resolver: yupResolver(loginSchema),
     })
 
     const router = useRouter()
 
     // Email and Password Login
-    const onSubmit = async (data: {email: string, password: string}) => {
+    const onSubmit = async (data: LoginFormData) => {
       setLoading(true)
       const status = await signIn("credentials", {
         email: data.email,

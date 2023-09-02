@@ -1,19 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { Friends } from "../friends/FriendAccepted";
+import { Friends } from "@/types/types";
 import cn from "classnames";
 import { formatTime } from "@/utils/utilities";
 import { pusherClient } from "@/utils/pusher";
-
-export type InitialChat = {
-  message: string;
-  senderId: string;
-  timestamp: number;
-  _id: string;
-}
-
-// export type InitialChatProps = Array<InitialChat>
+import { InitialChat } from "@/types/types";
 
 const ChatBody = ({initialChat, user, chatId}:{initialChat: InitialChat[], user: Friends, chatId: string | string[]}) => {
   const [messages, setMessages] = useState<InitialChat[]>(initialChat)
@@ -37,7 +29,7 @@ const ChatBody = ({initialChat, user, chatId}:{initialChat: InitialChat[], user:
       pusherClient.unsubscribe(chatId as string)
       pusherClient.unbind("incomingMessages", incomingMessages)
     }
-  }, [chatId])
+  }, [chatId, initialChat])
   
   return (
     <div className="w-full h-[calc(100vh-300px)] flex flex-col-reverse overflow-y-auto px-3 gap-0.5 primary-scrollbar">

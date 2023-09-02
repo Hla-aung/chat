@@ -3,9 +3,9 @@
 import Image from "next/image";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useRouter } from "next/navigation";
 
 type Sender = {
+  _id: string;
   email: string;
   username: string;
   image: string;
@@ -15,15 +15,15 @@ type requestSender = Array<Array<Sender>>;
 const FriendRequests = ({
   isLoading,
   requestSender,
-  setRequestSender
+  setRequestSender,
+  user
 }: {
   isLoading?: boolean;
   requestSender: requestSender;
-  setRequestSender: Dispatch<SetStateAction<any[]>>
+  setRequestSender: Dispatch<SetStateAction<any[]>>;
+  user: Sender;
 }) => {
-    const router = useRouter()
-
-    const acceptFriend = async(email: string) => {
+  const acceptFriend = async(email: string) => {
         const options = {
             method: "POST",
             headers: {
@@ -32,7 +32,7 @@ const FriendRequests = ({
             body: JSON.stringify(email)
         }
 
-        await fetch("http://localhost:3000/api/friends/accept", options)
+        await fetch("/api/friends/accept", options)
 
         setRequestSender(prev => prev.filter((request) => request[0].email !== email))
         window.location.reload()
@@ -47,7 +47,7 @@ const FriendRequests = ({
             body: JSON.stringify(email)
         }
 
-        await fetch("http://localhost:3000/api/friends/deny", options)
+        await fetch("/api/friends/deny", options)
 
         setRequestSender(prev => prev.filter((request) => request[0].email !== email))
         window.location.reload()
@@ -58,7 +58,7 @@ const FriendRequests = ({
       <div className="flex items-center gap-3">
         <p className="text-2xl font-semibold">Friend Requests</p>
         <p className="w-6 h-6 rounded-full bg-primary text-center text-white">
-          {requestSender.length || 0}
+          {requestSender.filter(sender => sender[0]?._id !== user?._id).length || 0}
         </p>
       </div>
       {isLoading ? (
@@ -68,7 +68,8 @@ const FriendRequests = ({
           {requestSender.length > 0 ? (
             <div className="flex flex-col mt-2 px-3 pt-2  overflow-y-auto w-full h-full primary-scrollbar">
               {requestSender.map((sender, i) => (
-                <div key={i} className="flex items-center gap-5 border-b-2 py-3" >
+                <>
+                {sender[0]?._id !== user?._id && (<div key={i} className="flex items-center gap-5 border-b-2 py-3" >
                   {sender[0]?.image ? (
                     <Image
                       src={sender[0]?.image}
@@ -91,7 +92,8 @@ const FriendRequests = ({
                     </div>
                         
                       </div>
-                  </div>
+                  </div>)}
+                  </>
               ))}
             </div>
           ) : (

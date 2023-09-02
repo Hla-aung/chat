@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
-import { InitialChat } from "@/components/chat/ChatBody";
+import { InitialChat } from "@/types/types";
 
 
 const Chat = () => {
@@ -16,7 +16,7 @@ const Chat = () => {
   const [userId1, userId2] = (chatid as string)?.split("--") ?? []
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/friends")
+    fetch("/api/friends")
     .then(res => res.json())
     .then(data => {
       setUser(data.user)
@@ -33,7 +33,7 @@ const Chat = () => {
         body: JSON.stringify(chatPartnerId)
       }
 
-      fetch("http://localhost:3000/api/friends/friendById", options)
+      fetch("/api/friends/friendById", options)
       .then(res => res.json())
       .then(data => setChatPartner(data.friend))
     })
@@ -48,13 +48,19 @@ const Chat = () => {
       body: JSON.stringify(chatid)
     }
 
-    fetch("http://localhost:3000/api/messages", options)
+    fetch("/api/messages", options)
     .then(res => res.json())
-    .then(data => setInitialChat(data.messages))
+    .then(data => {
+      if(data.messages === undefined){
+        setInitialChat([])
+      } else {
+        setInitialChat(data.messages)
+      }
+      })
   }, [chatid])
 
   return (
-    <div className="w-8/12 border h-[calc(100vh-100px)]">
+    <div className="w-full md:w-8/12 md:border md:h-[calc(100vh-100px)]">
         <ChatHeader chatPartner={chatPartner} chatId={chatid}/>
         <ChatBody initialChat={initialChat} user={user} chatId={chatid}/>
         <ChatInput user={user} chatPartner={chatPartner} chatId={chatid}/>

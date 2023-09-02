@@ -12,7 +12,7 @@ export default withAuth(async function middleware(req) {
 
     if(isLoginPage || isRegisterPage){
         if(isAuth){
-            return NextResponse.redirect('http://localhost:3000')
+            return NextResponse.redirect('https://chat-ten-sand.vercel.app/')
         }
         return NextResponse.next()
     }

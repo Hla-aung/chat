@@ -7,9 +7,10 @@ import { pusherServer } from "@/utils/pusher";
 
 export const POST =async (req: NextRequest, res: NextResponse) => {
     try{
-        await connectToDB();
-
         const {chatId, senderId, text} = await req.json()
+        
+
+        await connectToDB();
 
         const [userId1, userId2] = (chatId as string)?.split("--") ?? []
 
@@ -23,6 +24,9 @@ export const POST =async (req: NextRequest, res: NextResponse) => {
             senderId: senderId,
             timestamp: Date.now()
         }
+        
+        await pusherServer.trigger(chatId, "incomingMessages", message)
+        await pusherServer.trigger(friendId, "newMessage", message)
 
         if(!conversation){
             await Chat.create({
@@ -38,10 +42,6 @@ export const POST =async (req: NextRequest, res: NextResponse) => {
                 messages: message
             }
         })
-
-        await pusherServer.trigger(chatId, "incomingMessages", message)
-
-        await pusherServer.trigger(friendId, "newMessage", message)
 
         return NextResponse.json({message: "Message has been sent"}, {status: 200})
     }

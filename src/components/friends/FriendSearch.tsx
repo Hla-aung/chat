@@ -4,7 +4,6 @@ import { useState } from "react"
 import {useForm} from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import ErrorMessage from "../auth/ErrorMessage"
 
 const searchSchema = yup.object({
     email: yup.string().required("Enter your friend's email to search").email("Email must be a valid email")
@@ -33,7 +32,7 @@ const FriendSearch = () => {
             body: JSON.stringify(data)
         }
 
-        await fetch("http://localhost:3000/api/friends", options)
+        await fetch("/api/friends", options)
         .then(res =>  res.json())
         .then(data => setShowStatus(data.message))
     }

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preload" href="style.css" as="style" />
+        <link rel="preload" href="globals.css" as="style" />
         <link rel="icon" href="/logo.svg"/>
         <title>Whisper</title>
       </head>

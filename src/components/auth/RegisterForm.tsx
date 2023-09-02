@@ -9,6 +9,7 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import {PiEyeBold, PiEyeClosedBold} from "react-icons/pi"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2'
+import { RegisterFormData } from "@/types/types";
 
 const passwordReg = /^(?=.*[a-zA-Z])[A-Za-z\d!@#$%^&*()_+]/;
 
@@ -29,25 +30,18 @@ const registerSchema = yup.object({
     .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
-type FormData = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-
 const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
   });
 
   const router = useRouter()
   
-    const onSubmit = async (data: FormData) => {
+    const onSubmit = async (data: RegisterFormData) => {
       setLoading(true)
       const options = {
         method: "POST",
@@ -57,7 +51,7 @@ const RegisterForm = () => {
         body: JSON.stringify(data)
       }
   
-      await fetch("http://localhost:3000/api/auth/register",options)
+      await fetch("/api/auth/register",options)
       .then(res => {
         if(res.status === 500){
           Swal.fire({
@@ -76,7 +70,7 @@ const RegisterForm = () => {
           setLoading(false)
           return res.json()
         })
-      .then(data => data && router.push("http://localhost:3000/login"))
+      .then(data => data && router.push("/login"))
     };
 
   
